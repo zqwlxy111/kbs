@@ -72,8 +72,11 @@
                                     </i-select>
                                 </i-col>
                                 <i-col span="18" style="text-align: center;color:#000 ;font-size: 27px">
-                                    平板厂 {{linename}} 实时生产信息看板
+                                    创维自主MES系统 实时生产信息看板
                                 </i-col>
+                                <!--<i-col span="18" style="text-align: center;color:#000 ;font-size: 27px">
+                                    创维自主MES系统 平板厂 {{linename}} 实时生产信息看板
+                                </i-col>-->
                                 <i-col span="3">
                                     <div id="time" style="line-height: 30px"></div>
                                 </i-col>
@@ -156,7 +159,7 @@
                                 <div style="text-align: center">
                                     <div style="color: rgba(0, 0, 0, .55); font-size: 16px; color: #009688">单小时产出</div>
                                     <div style="color: rgba(0, 0, 0, .85); font-size: 30px; color: #009688; margin: 12px">
-                                        {{jibenxinxi.dachenglv}}
+                                        {{jibenxinxi.hourWgmng}}
                                     </div>
                                 </div>
                             </i-col>
@@ -172,15 +175,25 @@
                                 <div style="text-align: center">
                                     <div style="color: rgba(0, 0, 0, .55); font-size: 16px; color: #009688">直通率</div>
                                     <div style="color: rgba(0, 0, 0, .85); font-size: 30px; color: #009688; margin: 12px">
-                                        {{jibenxinxi.dachenglv}}
+                                        {{jibenxinxi.passLv}}
                                     </div>
                                 </div>
                             </i-col>
-
                         </Row>
                         <Row>
                             <i-col span="24">
-                                <div id="hdqkyc" style="width: 100%;height: 252px;margin-top: 27px"></div>
+                                <div v-show="number != -1">
+                                    <h1 style="text-align: center ; color:red ; font-size: 38px ; padding-top: 5px">
+                                        中国第
+                                        <u>&nbsp;&nbsp;{{number}}&nbsp;&nbsp;</u>
+                                        台 OBM OLED 电视成功下线！
+                                    </h1>
+                                </div>
+                            </i-col>
+                        </Row>
+                        <Row>
+                            <i-col span="24">
+                                <div id="hdqkyc" style="width: 100%;height: 254px;margin-top: 27px"></div>
                             </i-col>
                         </Row>
                     </Card>
@@ -190,7 +203,23 @@
                         <i-col span="24">
                             <Card style="margin-top: 5px ; margin-left: 5px">
                                 <Row>
-                                    <i-col span="8" style="line-height: 30px">
+                                    <i-col span="6" style="line-height: 30px">
+                                        <Row>
+                                            <i-col span="12">
+                                                <div style="text-align: center">
+                                                    <div style="color: rgba(0, 0, 0, .55); font-size: 14px">线体</div>
+                                                </div>
+                                            </i-col>
+                                            <i-col span="12">
+                                                <div style="text-align: center">
+                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 14px">
+                                                        {{linename}}
+                                                    </div>
+                                                </div>
+                                            </i-col>
+                                        </Row>
+                                    </i-col>
+                                    <i-col span="6" style="line-height: 30px">
                                         <Row>
                                             <i-col span="12">
                                                 <div style="text-align: center">
@@ -199,14 +228,14 @@
                                             </i-col>
                                             <i-col span="12">
                                                 <div style="text-align: center">
-                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 18px">
+                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 14px">
                                                         {{jibenxinxi.headPerson}}
                                                     </div>
                                                 </div>
                                             </i-col>
                                         </Row>
                                     </i-col>
-                                    <i-col span="8" style="line-height: 30px">
+                                    <i-col span="6" style="line-height: 30px">
                                         <Row>
                                             <i-col span="12">
                                                 <div style="text-align: center">
@@ -215,15 +244,16 @@
                                             </i-col>
                                             <i-col span="12">
                                                 <div style="text-align: center">
-                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 18px">
-                                                        {{jibenxinxi.headPerson}}
+                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 14px">
+                                                        <!--                                                        {{jibenxinxi.headPerson}}-->
+                                                        42
                                                     </div>
                                                 </div>
                                             </i-col>
                                         </Row>
 
                                     </i-col>
-                                    <i-col span="8" style="line-height: 30px">
+                                    <i-col span="6" style="line-height: 30px">
                                         <Row>
                                             <i-col span="12">
                                                 <div style="text-align: center">
@@ -232,7 +262,7 @@
                                             </i-col>
                                             <i-col span="12">
                                                 <div style="text-align: center">
-                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 18px">
+                                                    <div style="color: rgba(0, 0, 0, .85); font-size: 14px">
                                                         {{jibenxinxi.createTime}}
                                                     </div>
                                                 </div>
@@ -246,7 +276,7 @@
                     <Row>
                         <i-col span="24">
                             <Card style="margin-top: 5px ; margin-left: 5px">
-                                <i-Table stripe border max-height="305" size="small" :columns="columns1"
+                                <i-Table stripe border max-height="367" size="small" :columns="columns1"
                                          :data="data1"></i-Table>
                             </Card>
                         </i-col>
@@ -256,7 +286,7 @@
             <Row>
                 <i-col span="24">
                     <Card style="margin-top: 5px ;">
-                        <i-Table stripe border max-height="279" size="small" :columns="columns2"
+                        <i-Table stripe border max-height="290" size="small" :columns="columns2"
                                  :data="data2"></i-Table>
                     </Card>
                 </i-col>
@@ -430,10 +460,34 @@
                     }
                     // 辅助线
                     ,
-                    markLine : {
-                        data : [
-                            {type : 'average', name: '平均值'}
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
                         ]
+                    }
+                },
+                {
+                    name: '电视机',
+                    type: 'bar',
+                    data:[200.0, 400.9, 70.0, 230.2, 25.06, 760.7, 135.6, 162.2, 32.6, 20.0, 60.4, 30.3],
+                    // data: mData,
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    },
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'gray',
+                                    fontSize: 14
+                                }
+                            }
+                        }
                     }
                 }
             ]
@@ -449,10 +503,20 @@
         el: '#app',
         data: {
             visible: false,
+            number: -1,
             line: '',
             linename: '',
             jibenxinxi: {
-                id: '', maktx: '', gamng: '', tlmng: '', wgmng: '', headPerson: '', dachenglv: '', createTime: ''
+                id: '',
+                maktx: '',
+                gamng: '',
+                tlmng: '',
+                wgmng: '',
+                headPerson: '',
+                dachenglv: '',
+                createTime: '',
+                passLv: '',
+                hourWgmng: ''
             },
             selected: '',
             columns1: [
@@ -483,13 +547,13 @@
                     title: 'MES工单号',
                     key: 'id',
                     align: 'center',
-                    width: 200
+                    width: 180
                 },
                 {
                     title: 'MES销单号',
-                    key: 'id',
+                    key: 'planNo',
                     align: 'center',
-                    width: 180
+                    width: 210
                 },
                 {
                     title: '工单类型',
@@ -508,7 +572,7 @@
                 },
                 {
                     title: '结余',
-                    key: 'gamng',
+                    key: 'jieyu',
                     align: 'center'
                 },
                 {
@@ -578,7 +642,8 @@
                 function qg() {
                     util.requestget('/mes/kb/getCurrenMesOrderByLineCode?lineCode=' + sta.value, function (e) {
                         console.log(e);
-                        if (e.result) {
+                        console.log(e.result);
+                        if (e.result.view) {
                             myData = [];
                             myTimeData = [];
                             var data1 = e.result.trend;
@@ -594,15 +659,40 @@
                                 myTimeData.push(getMyDate(e.result.trend[i].wholePoint, false)); // 完工节点对应的时间
                             }
                             // 基本信息属性赋值
-                            {
-                                vm.jibenxinxi.id = e.result.view.id;
-                                vm.jibenxinxi.maktx = e.result.view.maktx;
-                                vm.jibenxinxi.gamng = e.result.view.gamng;
-                                vm.jibenxinxi.tlmng = e.result.view.tlmng;
-                                vm.jibenxinxi.wgmng = e.result.view.wgmng;
-                                vm.jibenxinxi.createTime = getMyDate(e.result.view.createTime, true);
-                                vm.jibenxinxi.dachenglv = toPercent(e.result.view.wgmng / e.result.view.gamng);
-                            }
+                            vm.jibenxinxi.id = e.result.view.id;
+                            vm.jibenxinxi.maktx = e.result.view.maktx;
+                            vm.jibenxinxi.createTime = getMyDate(e.result.view.createTime, true);
+                            var wgmng = e.result.view.wgmng; // 临时定义的完工变量 -- 以后用不到可以删除
+                            // vm.jibenxinxi.gamng = e.result.view.gamng;
+                            // vm.jibenxinxi.tlmng = e.result.view.tlmng;
+                            // vm.jibenxinxi.wgmng = e.result.view.wgmng;
+                            // vm.jibenxinxi.dachenglv = toPercent(e.result.view.wgmng / e.result.view.gamng);
+                            util.requestget('/mes/kb/getLineMesOrderYield?lineCode=' + sta.value, function (e) {
+                                console.log(e);
+                                console.log(sta.value);
+                                // 定义总量变量
+                                var gamngAll = 0, hisWgmngAll = 0, tlmngAll = 0, wgmngAll = 0, ycmngAll = 0;
+                                for (let i = 0; i < vm.data2.length; i++) {
+                                    gamngAll += vm.data2[i].gamng;
+                                    hisWgmngAll += vm.data2[i].hisWgmng;
+                                    tlmngAll += vm.data2[i].todayTlmng;
+                                    wgmngAll += vm.data2[i].todayWgmng;
+                                    ycmngAll += vm.data2[i].todayYcmng;
+                                }
+
+                                // 算出今日计划 -- 凸显
+                                // 计算结余
+                                for (let i = 0; i < vm.data2.length; i++) {
+                                    vm.data2[i].todayPlan = gamngAll - hisWgmngAll;
+                                }
+                                vm.jibenxinxi.gamng = gamngAll - hisWgmngAll;
+                                vm.jibenxinxi.tlmng = tlmngAll;
+                                vm.jibenxinxi.wgmng = wgmngAll;
+                                vm.jibenxinxi.dachenglv = toPercent(vm.jibenxinxi.wgmng / vm.jibenxinxi.gamng);
+                                vm.jibenxinxi.passLv = vm.jibenxinxi.wgmng == 0 ? toPercent(0) : toPercent(1 - (ycmngAll / vm.jibenxinxi.wgmng));
+                                vm.jibenxinxi.hourWgmng = data1.length == 0 ? 0 : (vm.jibenxinxi.wgmng / data1.length).toFixed(1);
+                            });
+
                             // 图表显示
                             getMycharts(myData, myTimeData);
                         } else {
@@ -614,7 +704,9 @@
                                 wgmng: '',
                                 headPerson: '',
                                 dachenglv: '',
-                                createTime: ''
+                                createTime: '',
+                                passLv: '',
+                                hourWgmng: ''
                             };
                             var cc = getMycharts(myData, myTimeData);
                             cc.dispose();
@@ -635,17 +727,31 @@
                             vm.data2[i].hisWgmng = vm.data2[i].wgmng - vm.data2[i].todayWgmng;
                             vm.data2[i].planAchin = toPercent(vm.data2[i].wgmng / vm.data2[i].gamng);
                             vm.data2[i].todayPass = vm.data2[i].wgmng == 0 ? toPercent(0) : toPercent((1 - (vm.data2[i].ycmng / vm.data2[i].wgmng)));
+                            vm.data2[i].jieyu = vm.data2[i].gamng - vm.data2[i].wgmng;
                         }
                     })
                 }
 
                 qz();
 
+                // 请求number
+                function qc() {
+                    util.requestget('/mes/kb/getLineMesOrderYield?lineCode=PB1', function (e) {
+                        vm.number = '';
+                        vm.number = e.result[0].todayWgmng == 0? '': e.result[0].todayWgmng;
+                        console.log(e);
+                        console.log(sta.value);
+                    })
+                }
+
+                qc();
+
                 // 启动定时器
                 clearInterval(qgInter);
                 qgInter = setInterval(function () {
                     qg();
                     qz();
+                    qc();
                 }, 5000)
 
                 // 请求线长
@@ -654,6 +760,7 @@
                     console.log(e.result.headOfUnitName);
                     vm.jibenxinxi.headPerson = e.result.headOfUnitName;
                 });
+
 
             }
         }
