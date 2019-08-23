@@ -588,6 +588,13 @@
             data2: [],
         },
         created: function () {
+            // 先检测cookie
+            (function passCookie() {
+                console.log(typeof document.cookie.indexOf("key"));
+                if (document.cookie == '' ) {
+                    alert("cookie已过期！请重新登录！！")
+                }
+            })();
             // 请求线体信息 -- 用于下拉框的线体选择显示
             util.requestget('/safe_usercenter/base/getLineByFactoryCode?code=1100', function (e) {
                 var line = e.result;
@@ -717,12 +724,21 @@
 
                 qc();*/
 
+                // 检测cookie
+                function passCookie() {
+                    console.log(typeof document.cookie.indexOf("key"));
+                    if (document.cookie == '' ) {
+                        alert("cookie已过期！请重新登录！！")
+                    }
+                }
+
                 // 启动定时器
                 clearInterval(qgInter);
                 qgInter = setInterval(function () {
                     qg();
                     qz();
                     // qc();
+                    passCookie();
                 }, 5000);
 
                 // 请求线长

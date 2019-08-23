@@ -457,6 +457,17 @@
         });
 
     });
+
+    (function myBrowser() {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isOpera = userAgent.indexOf("Opera") > -1;
+        if (!(userAgent.indexOf("Chrome") > -1)) {
+            alert("检测到这不是Google Chrome浏览器!!! 请使用Google Chrome浏览器!!!");
+            window.location.href = "http://172.20.212.196:8080/site";
+        }
+    })()
+
+
 </script>
 </body>
 </html>
