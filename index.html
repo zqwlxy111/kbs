@@ -55,7 +55,7 @@
 <div class="layui-layout layui-layout-admin">
     <!-- 头部 -->
     <div class="layui-header">
-        <div class="layui-logo">
+        <div class="layui-logo" ew-event="flexible" style="cursor:pointer;">
             <img src="/kbs/assets/images/qweqwe.svg"/>
             <cite>&nbsp;生产可视化系统</cite>
         </div>
@@ -68,19 +68,13 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <!--<li class="layui-nav-item" lay-unselect>
-                <a ew-event="message" title="消息">
-                    <i class="layui-icon layui-icon-notice"></i>
-                    <span class="layui-badge-dot"></span>&lt;!&ndash;小红点&ndash;&gt;
-                </a>
-            </li>-->
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="note" title="便签"><i class="layui-icon layui-icon-note"></i></a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a ew-event="fullScreen" title="全屏"><i class="layui-icon layui-icon-screen-full"></i></a>
             </li>
-            <!--<li class="layui-nav-item" lay-unselect>
+            <li class="layui-nav-item" lay-unselect>
                 <a>
                     <img src="assets/images/head.png" class="layui-nav-img">
                     <cite>管理员</cite>
@@ -100,7 +94,7 @@
             </li>
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="theme" title="主题"><i class="layui-icon layui-icon-more-vertical"></i></a>
-            </li>-->
+            </li>
         </ul>
     </div>
 
@@ -110,7 +104,7 @@
             <ul class="layui-nav layui-nav-tree arrow2" lay-filter="admin-side-nav" lay-accordion="true"
                 style="margin-top: 15px;">
                 <li class="layui-nav-item">
-                    <a><i class="layui-icon layui-icon-set"></i>&emsp;<cite>生产可视化</cite></a>
+                    <a><i class="layui-icon layui-icon-set" ></i>&emsp;<cite>生产可视化</cite></a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a lay-href="page/console/pb-line.html">线体级</a>

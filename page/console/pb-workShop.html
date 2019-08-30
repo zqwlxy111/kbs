@@ -10,6 +10,9 @@
     <!--    iview-css-->
     <link rel="stylesheet" href="/kbs/assets/libs/iview/iview.css"/>
 
+    <!--    myCss-->
+    <link rel="stylesheet" href="/kbs/assets/css/benjamin.css"/>
+
     <!--    iview-icon-->
     <!--    iview用的是ionicons4.0.0.2版本的woff2-->
     <!--    <link href="https://cdn.bootcss.com/ionicons/4.0.0-2/css/ionicons.css" rel="stylesheet">-->
@@ -26,15 +29,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <style>
-        .center-yvan {
-            text-align: center;
-            color: rgba(0, 0, 0, .55);
-            font-size: 20px;
-            color: #009688;
-            font-weight: bold;
-        }
-    </style>
 </head>
 
 <body>
@@ -55,8 +49,7 @@
                                         </i-option>
                                     </i-select>
                                 </i-col>
-                                <i-col span="18"
-                                       style="text-align: center;color:#000 ;font-size: 27px; line-height: 30px">
+                                <i-col span="18" style="text-align: center;color:#000 ;font-size: 27px; line-height: 30px">
                                     创维自主MES系统 实时生产信息看板
                                 </i-col>
                                 <i-col span="3">
@@ -166,11 +159,57 @@
                 </i-col>
             </Row>
             <Row>
-                <i-col span="24">
+                <i-col span="12">
                     <Card style="margin-top: 5px">
                         <Row>
                             <i-col span="24">
-                                <div id="hdqkyc" style="height: 474px;"></div>
+                                <div id="hdqkyc" style="width:100%;height: 250px;"></div>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        <span style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            计划达成率
+                                        </span>
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        <span style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            工时效率
+                                        </span>
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        <span style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            直通率
+                                        </span>
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                    </i-col>
+                                </Row>
                             </i-col>
                         </Row>
                     </Card>
@@ -203,259 +242,28 @@
 <script src="/kbs/assets/libs/vue/vue.js"></script>
 <script type="text/javascript" src="/kbs/assets/libs/iview/iview.js"></script>
 <script type="text/javascript" src="/kbs/assets/libs/echarts/echarts.js"></script>
-<script type="text/javascript" src="/kbs/assets/libs/echarts/macarons.js"></script>
+<script type="text/javascript" src="/kbs/assets/libs/echarts/echartsTheme.js"></script>
 <script type="text/javascript" src="/kbs/assets/js/util.js"></script>
 <script type="text/javascript" src="/kbs/assets/js/tools.js"></script>
 
 <script>
-    test = function () {
+    /*test = function () {
         $(function () {
-            // 渲染活动情况预测
-            var myCharts = echarts.init(document.getElementById('hdqkyc'), 'macarons');
-            // var mData = [50, 100, 150, 80, 120, 150, 200, 250, 220, 250, 300, 350, 400, 380, 440, 450, 500, 550, 500];
-            // var mData = myData;
-
             // 外部引入
-            {
-                var data = {
-                    title: ['总计', '12-01', '12-02', '12-03', '12-04', '12-05', '12-06', '12-07', '12-08', '12-09'],
-                    plan_production: [500, 300, 490, 333, 346, 777, 888, 864, 789, 765],
-                    actual_production: [300, 400, 500, 300, 400, 500, 300, 400, 500, 500]
-                };
-
-                for (var pr in data) {
-                    data[pr] = data[pr].slice(0, 15);
-                }
-
-                function getTableLine(num) {
-                    var list = [];
-                    var bottom = 122;
-                    var height = 20;
-                    for (var i = 0; i < num; i++) {
-                        list.push({
-                            type: 'line',
-                            bottom: bottom - i * height,
-                            right: 80,
-                            style: {
-                                fill: '#333'
-                            },
-                            shape: {
-                                x1: 0,
-                                y1: 0,
-                                x2: 3200,
-                                y2: 0
-                            }
-
-                        });
-                    }
-                    return list;
-                }
-                var lineList = getTableLine(3);
-
-
-                option = {
-                    title: [{
-                        text: ' \n计划数量\n实际产出',
-                        bottom: 175,
-                        left: 10,
-                        textStyle: {
-                            lineHeight: 20,
-                            fontSize: 13,
-                            fontWeight: 'normal',
-                            formatter: function(value) {
-                                return '{table|' + value + '}';
-                            },
-                            rich: {
-                                table: {
-                                    align: 'center'
-                                }
-                            }
-                        }
-                    }],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'cross',
-                            label: {
-                                backgroundColor: '#283b56'
-                            }
-                        }
-                    },
-                    legend: {
-                        data: ['计划数量', '实际产出']
-                    },
-                    grid: {
-                        bottom: 147,
-                        left: 80,
-                        right: 80
-                    },
-                    xAxis: [{
-                        type: 'category',
-                        boundaryGap: true,
-                        data: data.title,
-                        axisTick: {
-                            length: 64
-                        },
-                        axisLabel: {
-                            formatter: function(value, index) {
-                                var indexNum = 0;
-                                for(var i = 0; i < data.title.length; i++){
-                                    if(value == data.title[i]){
-                                        indexNum = i;
-                                    }
-                                }
-                                return '{table|' + value +
-                                    '}\n{table|' + data.plan_production[indexNum] +
-                                    '}\n'+ data.actual_production[indexNum];
-                            },
-                            rich: {
-                                table: {
-                                    lineHeight: 20,
-                                    align: 'center'
-                                }
-                            }
-                        }
-                    }],
-                    yAxis: [{
-                        type: 'value',
-                        scale: true,
-                        minInterval: 1,
-                        name: '数量',
-                        splitLine: {
-                            show: false
-                        },
-                        min: function(v) {
-                            return Math.max((v.min - 10), 0);
-                        }
-                    }],
-                    series: [{
-                        name: '计划数量',
-                        type: 'bar',
-                        label: {
-                            show: true,
-                            position: 'top'
-                        },
-                        yAxisIndex: 0,
-                        data: data.plan_production
-                    }, {
-                        name: '实际产出',
-                        type: 'bar',
-                        label: {
-                            show: true,
-                            position: 'top'
-                        },
-                        yAxisIndex: 0,
-                        data: data.actual_production
-                    }],
-                    graphic: lineList
-                };
-            }
-
-            // 内部引入
-            /*var option = {
-                title: {
-                    subtext: '时段产出'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                /!*toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
-                    }
-                },*!/
-                calculable: true,
-                xAxis: [
-                    {
-                        type: 'category',
-                        // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-                        data: myTimeData
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
-                grid: {
-                    x: 55,
-                    y: 45,
-                    x2: 29,
-                    y2: 20,
-                    borderWidth: 1
-                },
-                series: [
-                    {
-                        name: '电视机产量',
-                        type: 'bar',
-                        // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                        data: mData,
-                        /!*markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        },*!/
-                        itemStyle: {
-                            normal: {
-                                label: {
-                                    show: true, //开启显示
-                                    position: 'top', //在上方显示
-                                    textStyle: { //数值样式
-                                        color: 'gray',
-                                        fontSize: 14
-                                    }
-                                }
-                            }
-                        }
-                        // 辅助线
-                        ,
-                        markLine: {
-                            data: [
-                                {type: 'average', name: '平均值'}
-                            ]
-                        }
-                    }
-                ]
-            };*/
-            myCharts.setOption(option);
-        });
-    }();
-</script>
-<script>
-    window.setInterval("yvan.getDynamicTime()", 1000);//每隔1秒，调用一次getDateDemo()
-
-    // 制作图表
-    /*function getMycharts(myData, myTimeData) {
-
-        // 渲染活动情况预测
-        var myCharts = echarts.init(document.getElementById('hdqkyc'), myEchartsTheme);
-        // var mData = [50, 100, 150, 80, 120, 150, 200, 250, 220, 250, 300, 350, 400, 380, 440, 450, 500, 550, 500];
-        var mData = myData;
-
-        // 外部引入
-        {
             var data = {
-                title: ['总计', '12-01', '12-02', '12-03', '12-04', '12-05', '12-06', '12-07', '12-08', '12-09'],
-                plan_production: [500, 300, 490, 333, 346, 777, 888, 864, 789, 765],
-                actual_production: [300, 400, 500, 300, 400, 500, 300, 400, 500, 500],
-                attainment_rate: [60, 80, 90, 60, 70, 80, 90, 60, 70, 90],
-                productivity: [30, 45, 88, 100, 110, 70, 80, 90, 100, 100]
+                title: ['111','12-01', '12-02', '12-03', '12-04', '12-05', '12-06', '12-07', '12-08', '12-09'],
+                plan_production: [490,300, 490, 333, 346, 777, 888, 864, 789, 765],
+                actual_production: [490,400, 500, 300, 400, 500, 300, 400, 500, 500]
             };
 
             for (var pr in data) {
-                data[pr] = data[pr].slice(1, -1);
+                data[pr] = data[pr].slice(0, 20);
             }
 
             function getTableLine(num) {
                 var list = [];
                 var bottom = 122;
-                var height = 20;
+                var height = 25;
                 for (var i = 0; i < num; i++) {
                     list.push({
                         type: 'line',
@@ -476,13 +284,13 @@
                 return list;
             }
 
-            var lineList = getTableLine(5);
+            var lineList = getTableLine(3);
 
 
-            option = {
+            var option = {
                 title: [{
-                    text: ' \n计划数量\n实际产出\n达成率\n生产效率',
-                    bottom: 72,
+                    text: '计划数量\n实际产出\n',
+                    top: 280,
                     left: 10,
                     textStyle: {
                         lineHeight: 20,
@@ -508,53 +316,39 @@
                     }
                 },
                 legend: {
-                    data: ['计划数量', '实际产出', '达成率', '生产效率']
+                    data: ['计划数量', '实际产出']
                 },
                 grid: {
-                    bottom: 150,
+                    bottom: 147,
                     left: 80,
                     right: 80
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        saveAsImage: {}
-                    }
-                },
-                dataZoom: {
-                    show: true,
-                    start: 0,
-                    end: 50,
-                    maxSpan: 80
-                    // zoomLock: true
                 },
                 xAxis: [{
                     type: 'category',
                     boundaryGap: true,
                     data: data.title,
                     axisTick: {
-                        length: 108
-                    },
+                        length: 74
+                    }
+                    ,
                     axisLabel: {
                         formatter: function (value, index) {
                             var indexNum = 0;
-                            for (var i = 0; i < data.title.length; i++) {
-                                if (value == data.title[i]) {
-                                    indexNum = i;
-                                }
-                            }
-                            return '{table|' + value +
-                                '}\n{table|' + data.plan_production[indexNum] +
-                                '}\n{table|' + data.actual_production[indexNum] +
-                                '}\n{table|' + data.attainment_rate[indexNum] +
-                                '%}\n{table|' + data.productivity[indexNum] + '%}';
+                            /!*      for (var i = 0; i < data.title.length; i++) {
+                                      if (value == data.title[i]) {
+                                          indexNum = i;
+                                      }
+                                  }*!/
+                            // return '{table|' + value + '}\n'+'{table|' + data.plan_production[index] + '}\n' + data.actual_production[index];
+                            // return value;
+                            return value +'\n'+'\n'+ data.plan_production[index] +'\n'+'\n'+ data.actual_production[index]
                         },
-                        rich: {
+                        /!*rich: {
                             table: {
                                 lineHeight: 20,
                                 align: 'center'
                             }
-                        }
+                        }*!/
                     }
                 }],
                 yAxis: [{
@@ -567,16 +361,6 @@
                     },
                     min: function (v) {
                         return Math.max((v.min - 10), 0);
-                    }
-                }, {
-                    type: 'value',
-                    scale: true,
-                    name: '百分比',
-                    splitLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        formatter: '{value} %'
                     }
                 }],
                 series: [{
@@ -597,108 +381,15 @@
                     },
                     yAxisIndex: 0,
                     data: data.actual_production
-                }, {
-                    name: '达成率',
-                    type: 'line',
-                    label: {
-                        show: true,
-                        position: 'top',
-                        formatter: '{c} %'
-                    },
-                    yAxisIndex: 1,
-                    data: data.attainment_rate
-                }, {
-                    name: '生产效率',
-                    type: 'line',
-                    label: {
-                        show: true,
-                        position: 'top',
-                        formatter: '{c} %'
-                    },
-                    yAxisIndex: 1,
-                    data: data.productivity
                 }],
                 graphic: lineList
             };
-        }
-
-        // 内部引入
-        var option = {
-            title: {
-                subtext: '时段产出'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            /!*toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {show: true, type: ['line', 'bar']},
-                    restore : {show: true},
-                    saveAsImage : {show: true}
-                }
-            },*!/
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    // data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-                    data: myTimeData
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            grid: {
-                x: 55,
-                y: 45,
-                x2: 29,
-                y2: 20,
-                borderWidth: 1
-            },
-            series: [
-                {
-                    name: '电视机产量',
-                    type: 'bar',
-                    // data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                    data: mData,
-                    /!*markPoint: {
-                        data: [
-                            {type: 'max', name: '最大值'},
-                            {type: 'min', name: '最小值'}
-                        ]
-                    },*!/
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                show: true, //开启显示
-                                position: 'top', //在上方显示
-                                textStyle: { //数值样式
-                                    color: 'gray',
-                                    fontSize: 14
-                                }
-                            }
-                        }
-                    }
-                    // 辅助线
-                    ,
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'}
-                        ]
-                    }
-                }
-            ]
-        };
-        myCharts.setOption(option);
-
-        return myCharts;
-    }*/
-
+            echarts.init(document.getElementById('hdqkyc'), 'customed').setOption(option);
+        });
+    }();*/
+</script>
+<script>
+    window.setInterval("yvan.getDynamicTime()", 1000);//每隔1秒，调用一次getDateDemo()
 </script>
 <script>
     var qgInter;
@@ -706,8 +397,10 @@
         el: '#app',
         data: {
             visible: false,
-            line:'',
-            selected:'',
+            line: '',           // 下拉框的line
+            lineByCode:'',      // 具体某个车间的具体信息
+            selected: '',
+            percent:'',
             columns: [
                 {
                     title: '线体',
@@ -819,6 +512,13 @@
                 console.log(e);
             });
 
+            util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=11001238', function (e) {
+                console.log(e);
+                vm.lineByCode = e.result;
+                var leng = (100 / e.result.length);
+                vm.percent = leng;
+            });
+
         },
         methods: {
             show: function () {
@@ -826,6 +526,8 @@
             },
             changge: function (res) {
                 console.log(res);
+
+                yvan.getMyCharts('hdqkyc');
             }
         }
     })

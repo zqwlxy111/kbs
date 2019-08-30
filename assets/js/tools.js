@@ -217,12 +217,94 @@ window.yvan = {
      * @Date: 2019/8/27/0027  16:06
      *
      */
-    passChrome:function () {
+    passChrome: function () {
         var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
         var isOpera = userAgent.indexOf("Opera") > -1;
         if (!(userAgent.indexOf("Chrome") > -1)) {
             alert("检测到这不是Google Chrome浏览器!!! 请使用Google Chrome浏览器!!!");
             window.location.href = "http://172.20.212.196:8080/site";
         }
+    },
+
+
+    /** @MethodName: getMyCharts
+     * @Description: 柱形图
+     * @Return:
+     * @Author: Yvan
+     * @Date: 2019/8/29/0029  9:49
+     *
+     */
+    getMyCharts: function (eleId) {
+
+        // 渲染活动情况预测
+        var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
+        var mData = [50, 100, 150, 80, 120, 150, 200, 250, 220, 250, 300, 350, 400, 380, 440];
+        // var mData = myData;
+
+        var option = {
+            title: {
+                text: '整机部当日各线信息统计',
+                // 标题居中
+                left:'center',
+                textStyle:{
+                    //文字颜色
+                    color:'#000',
+                    //字体风格,'normal','italic','oblique'
+                    fontStyle:'normal',
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontWeight:'bolder',
+                    //字体系列
+                    fontFamily:'sans-serif',
+                    //字体大小
+                    fontSize:17
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    show: false,
+                    data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '智能1号线']
+                    // data: myTimeData
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            grid: {
+                x: 55,
+                y: 45,
+                x2: 10,
+                y2: 4,
+                borderWidth: 1
+            },
+            series: [
+                {
+                    name: '电视机产量',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6],
+                    // data: mData,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'gray',
+                                    fontSize: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        myCharts.setOption(option);
+        return myCharts;
     }
 };

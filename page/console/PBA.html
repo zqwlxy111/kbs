@@ -59,8 +59,8 @@
 
         var option = {
             title: [{
-                text: '\n计划数量\n实际产出',
-                bottom: 255,
+                text: '计划数量\n实际产出\n',
+                top: 280,
                 left: 10,
                 textStyle: {
                     lineHeight: 20,
@@ -104,12 +104,14 @@
                 axisLabel: {
                     formatter: function (value, index) {
                         var indexNum = 0;
-                  /*      for (var i = 0; i < data.title.length; i++) {
-                            if (value == data.title[i]) {
-                                indexNum = i;
-                            }
-                        }*/
-                        return '{table|' + value + '}\n{table|' + data.plan_production[index] + '}\n' + data.actual_production[index];
+                        /*      for (var i = 0; i < data.title.length; i++) {
+                                  if (value == data.title[i]) {
+                                      indexNum = i;
+                                  }
+                              }*/
+                        return '{table|' + value + '}\n'+'{table|' + data.plan_production[index] + '}\n' + data.actual_production[index];
+                        // return value;
+                        // return value +'\n'+'\n'+ data.plan_production[index] +'\n'+'\n'+ data.actual_production[index]
                     },
                     rich: {
                         table: {

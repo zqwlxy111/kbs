@@ -540,7 +540,7 @@
                 vm.dateNow = yvan.getMyDate(new Date(), 'y-m-d');
 
                 function qg() {
-                    util.requestget('/mes/kb/getCurrenMesOrderByLineCode?lineCode=' + sta.value, function (e) {
+                    util.requestget('/mes/kb/getRealProductionGroupLine?lineCode=' + sta.value, function (e) {
                         console.log(e);
                         console.log(e.result);
                         if (e.result.view) {
