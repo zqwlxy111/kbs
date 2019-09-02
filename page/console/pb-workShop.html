@@ -49,7 +49,8 @@
                                         </i-option>
                                     </i-select>
                                 </i-col>
-                                <i-col span="18" style="text-align: center;color:#000 ;font-size: 27px; line-height: 30px">
+                                <i-col span="18"
+                                       style="text-align: center;color:#000 ;font-size: 27px; line-height: 30px">
                                     创维自主MES系统 实时生产信息看板
                                 </i-col>
                                 <i-col span="3">
@@ -159,7 +160,7 @@
                 </i-col>
             </Row>
             <Row>
-                <i-col span="12">
+                <i-col span="12" v-show="true">
                     <Card style="margin-top: 5px">
                         <Row>
                             <i-col span="24">
@@ -171,7 +172,8 @@
                                         &nbsp;&nbsp;&nbsp;
                                     </i-col>
                                     <i-col span="22">
-                                        <span v-for="lineName in lineByCode" class="libinglin" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                        <span v-for="lineName in lineByCode" class="libinglin"
+                                              :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
                                     </i-col>
                                 </Row>
                             </i-col>
@@ -183,7 +185,8 @@
                                         </span>
                                     </i-col>
                                     <i-col span="22">
-                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.planAchin}}</span>
                                     </i-col>
                                 </Row>
                             </i-col>
@@ -195,7 +198,8 @@
                                         </span>
                                     </i-col>
                                     <i-col span="22">
-                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.workEff}}</span>
                                     </i-col>
                                 </Row>
                             </i-col>
@@ -207,7 +211,8 @@
                                         </span>
                                     </i-col>
                                     <i-col span="22">
-                                        <span v-for="lineName in lineByCode" class="libinglin-1" :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.passRate}}</span>
                                     </i-col>
                                 </Row>
                             </i-col>
@@ -218,7 +223,48 @@
                     <Row>
                         <i-col span="24">
                             <Card style="margin-top: 5px ; margin-left: 5px">
-                                这里还是一个柱形图
+                                <Row>
+                                    <i-col span="24">
+                                        <div id="hdqkyc1" style="width:100%;height: 275px;"></div>
+                                    </i-col>
+                                    <i-col span="24">
+                                        <Row>
+                                            <i-col span="2">
+                                                &nbsp;&nbsp;&nbsp;
+                                            </i-col>
+                                            <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin"
+                                              :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                            </i-col>
+                                        </Row>
+                                    </i-col>
+                                    <i-col span="24">
+                                        <Row>
+                                            <i-col span="2">
+                                        <span style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            生产自然台
+                                        </span>
+                                            </i-col>
+                                            <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.scZiRanTai}}</span>
+                                            </i-col>
+                                        </Row>
+                                    </i-col>
+                                    <i-col span="24">
+                                        <Row>
+                                            <i-col span="2">
+                                        <span style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            生产标台数
+                                        </span>
+                                            </i-col>
+                                            <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.scBiaoTaiShu}}</span>
+                                            </i-col>
+                                        </Row>
+                                    </i-col>
+                                </Row>
                             </Card>
                         </i-col>
                     </Row>
@@ -247,148 +293,6 @@
 <script type="text/javascript" src="/kbs/assets/js/tools.js"></script>
 
 <script>
-    /*test = function () {
-        $(function () {
-            // 外部引入
-            var data = {
-                title: ['111','12-01', '12-02', '12-03', '12-04', '12-05', '12-06', '12-07', '12-08', '12-09'],
-                plan_production: [490,300, 490, 333, 346, 777, 888, 864, 789, 765],
-                actual_production: [490,400, 500, 300, 400, 500, 300, 400, 500, 500]
-            };
-
-            for (var pr in data) {
-                data[pr] = data[pr].slice(0, 20);
-            }
-
-            function getTableLine(num) {
-                var list = [];
-                var bottom = 122;
-                var height = 25;
-                for (var i = 0; i < num; i++) {
-                    list.push({
-                        type: 'line',
-                        bottom: bottom - i * height,
-                        right: 80,
-                        style: {
-                            fill: '#333'
-                        },
-                        shape: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 3200,
-                            y2: 0
-                        }
-
-                    });
-                }
-                return list;
-            }
-
-            var lineList = getTableLine(3);
-
-
-            var option = {
-                title: [{
-                    text: '计划数量\n实际产出\n',
-                    top: 280,
-                    left: 10,
-                    textStyle: {
-                        lineHeight: 20,
-                        fontSize: 13,
-                        fontWeight: 'normal',
-                        formatter: function (value) {
-                            return '{table|' + value + '}';
-                        },
-                        rich: {
-                            table: {
-                                align: 'center'
-                            }
-                        }
-                    }
-                }],
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: '#283b56'
-                        }
-                    }
-                },
-                legend: {
-                    data: ['计划数量', '实际产出']
-                },
-                grid: {
-                    bottom: 147,
-                    left: 80,
-                    right: 80
-                },
-                xAxis: [{
-                    type: 'category',
-                    boundaryGap: true,
-                    data: data.title,
-                    axisTick: {
-                        length: 74
-                    }
-                    ,
-                    axisLabel: {
-                        formatter: function (value, index) {
-                            var indexNum = 0;
-                            /!*      for (var i = 0; i < data.title.length; i++) {
-                                      if (value == data.title[i]) {
-                                          indexNum = i;
-                                      }
-                                  }*!/
-                            // return '{table|' + value + '}\n'+'{table|' + data.plan_production[index] + '}\n' + data.actual_production[index];
-                            // return value;
-                            return value +'\n'+'\n'+ data.plan_production[index] +'\n'+'\n'+ data.actual_production[index]
-                        },
-                        /!*rich: {
-                            table: {
-                                lineHeight: 20,
-                                align: 'center'
-                            }
-                        }*!/
-                    }
-                }],
-                yAxis: [{
-                    type: 'value',
-                    scale: true,
-                    minInterval: 1,
-                    name: '数量',
-                    splitLine: {
-                        show: false
-                    },
-                    min: function (v) {
-                        return Math.max((v.min - 10), 0);
-                    }
-                }],
-                series: [{
-                    name: '计划数量',
-                    type: 'bar',
-                    label: {
-                        show: true,
-                        position: 'top'
-                    },
-                    yAxisIndex: 0,
-                    data: data.plan_production
-                }, {
-                    name: '实际产出',
-                    type: 'bar',
-                    label: {
-                        show: true,
-                        position: 'top'
-                    },
-                    yAxisIndex: 0,
-                    data: data.actual_production
-                }],
-                graphic: lineList
-            };
-            echarts.init(document.getElementById('hdqkyc'), 'customed').setOption(option);
-        });
-    }();*/
-</script>
-<script>
     window.setInterval("yvan.getDynamicTime()", 1000);//每隔1秒，调用一次getDateDemo()
 </script>
 <script>
@@ -398,13 +302,13 @@
         data: {
             visible: false,
             line: '',           // 下拉框的line
-            lineByCode:'',      // 具体某个车间的具体信息
+            lineByCode: '',      // 具体某个车间的具体信息
             selected: '',
-            percent:'',
+            percent: '',
             columns: [
                 {
                     title: '线体',
-                    key: 'planAchin',
+                    key: 'lineName',
                     align: 'center'
                 },
                 {
@@ -413,22 +317,22 @@
                     children: [
                         {
                             title: '线长',
-                            key: 'caddress',
+                            key: 'lineMasterName',
                             align: 'center'
                         },
                         {
                             title: '人数',
-                            key: 'cname',
+                            key: 'linePersonNumber',
                             align: 'center'
                         },
                         {
                             title: '线体状态',
-                            key: 'cname',
+                            key: 'runStatus',
                             align: 'center'
                         },
                         {
                             title: '工作时间',
-                            key: 'cname',
+                            key: 'lineRunDuration',
                             align: 'center'
                         }
                     ]
@@ -439,22 +343,22 @@
                     children: [
                         {
                             title: '计划量',
-                            key: 'cname',
+                            key: 'todayPlanMng',
                             align: 'center'
                         },
                         {
                             title: '投产量',
-                            key: 'cname',
+                            key: 'todayTlmng',
                             align: 'center'
                         },
                         {
                             title: '产出量',
-                            key: 'cname',
+                            key: 'todayWgmng',
                             align: 'center'
                         },
                         {
                             title: '计划达成率',
-                            key: 'cname',
+                            key: 'planAchin',
                             align: 'center'
                         },
                     ]
@@ -465,17 +369,17 @@
                     children: [
                         {
                             title: '产出工时',
-                            key: 'cname',
+                            key: 'todayProductTime',
                             align: 'center'
                         },
                         {
                             title: '投入工时',
-                            key: 'cname',
+                            key: 'todayWorkTime',
                             align: 'center'
                         },
                         {
                             title: '工时效率',
-                            key: 'cname',
+                            key: 'workEff',
                             align: 'center'
                         },
                     ]
@@ -486,12 +390,12 @@
                     children: [
                         {
                             title: '不良数',
-                            key: 'cname',
+                            key: 'todayYcmng',
                             align: 'center'
                         },
                         {
                             title: '直通率',
-                            key: 'cname',
+                            key: 'passRate',
                             align: 'center'
                         },
                     ]
@@ -511,14 +415,6 @@
                 vm.line = line;
                 console.log(e);
             });
-
-            util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=11001238', function (e) {
-                console.log(e);
-                vm.lineByCode = e.result;
-                var leng = (100 / e.result.length);
-                vm.percent = leng;
-            });
-
         },
         methods: {
             show: function () {
@@ -526,8 +422,73 @@
             },
             changge: function (res) {
                 console.log(res);
-
-                yvan.getMyCharts('hdqkyc');
+                var xData = [];
+                var dataData = {};
+                dataData.planAchin = [];
+                dataData.workEff = [];
+                dataData.passRate = [];
+                dataData.scZiRanTai = [];
+                dataData.scBiaoTaiShu = [];
+                util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=' + res.value, function (e) {
+                    console.log(e);
+                    vm.lineByCode = vm.dataLine = e.result; // 左边图表和下方表格的数据源
+                    vm.percent = (100 / e.result.length);
+                    for (let i = 0; i < e.result.length; i++) {
+                        // 三个率以及表格参数设置
+                        {
+                            var planAchin = e.result[i].todayPlanMng ? yvan.toPercent((e.result[i].todayWgmng / e.result[i].todayPlanMng), 2) : yvan.toPercent(0, 2); // 计划达成率
+                            var workEff = e.result[i].todayWorkTime ? yvan.toPercent(((e.result[i].todayProductTime) / (e.result[i].todayWorkTime)), 2) : yvan.toPercent(0, 2); // 工时效率
+                            var passRate = e.result[i].todayWgmng ? yvan.toPercent((1 - (e.result[i].todayYcmng / e.result[i].todayWgmng)), 2) : yvan.toPercent(0, 2); // 直通率
+                            vm.lineByCode[i].planAchin = planAchin;
+                            vm.lineByCode[i].workEff = workEff;
+                            vm.lineByCode[i].passRate = passRate;
+                            if (e.result[i].lineRunStatus == 0) {
+                                vm.lineByCode[i].runStatus = vm.dataLine[i].runStatus = "停止";
+                            } else {
+                                vm.lineByCode[i].runStatus = vm.dataLine[i].runStatus = "运行";
+                            }
+                        }
+                        // x轴的参数说明
+                        {
+                            xData.push(e.result[i].lineName);
+                        }
+                        // 图表三率的传值
+                        {
+                            dataData.planAchin.push(parseFloat(planAchin));
+                            dataData.workEff.push(parseFloat(workEff));
+                            dataData.passRate.push(parseFloat(passRate));
+                        }
+                        // 生产自然台和生产标台数传值
+                        {
+                            dataData.scZiRanTai.push(e.result[i].todayWgmng);
+                            dataData.scBiaoTaiShu.push(parseInt((e.result[i].todayProductTime / 78.88).toFixed(2)));
+                            vm.lineByCode[i].scZiRanTai = dataData.scZiRanTai[i];
+                            vm.lineByCode[i].scBiaoTaiShu = dataData.scBiaoTaiShu[i];
+                        }
+                    }
+                    console.log(vm.lineByCode);
+                    console.log(xData);
+                    console.log(dataData);
+                    yvan.getMyChartsL('hdqkyc', {
+                        text: '整机部当日各线信息统计',
+                        legend:{
+                            data:['计划达成率', '工时效率', '直通率']
+                        },
+                        xData: xData,
+                        planAchin: dataData.planAchin,
+                        workEff:dataData.workEff,
+                        passRate:dataData.passRate
+                    });    // 左图
+                    yvan.getMyChartsR('hdqkyc1', {
+                        text: '整机部当日各线实时产出',
+                        legend:{
+                            data:['生产自然台', '生产标台数']
+                        },
+                        xData: xData,
+                        scZiRanTai: dataData.scZiRanTai,
+                        scBiaoTaiShu:dataData.scBiaoTaiShu
+                    });    // 右图
+                });
             }
         }
     })

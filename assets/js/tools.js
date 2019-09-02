@@ -228,36 +228,82 @@ window.yvan = {
 
 
     /** @MethodName: getMyCharts
-     * @Description: 柱形图
+     * @Description: 车间级柱形图(左)
      * @Return:
      * @Author: Yvan
      * @Date: 2019/8/29/0029  9:49
      *
      */
-    getMyCharts: function (eleId) {
+    getMyChartsL: function (eleId,config) {
 
         // 渲染活动情况预测
         var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
-        var mData = [50, 100, 150, 80, 120, 150, 200, 250, 220, 250, 300, 350, 400, 380, 440];
-        // var mData = myData;
+
+        // 标签设置
+        var labelOption = {
+            normal: {
+                rotate: 0,
+                align: 'left',
+                verticalAlign: 'middle',
+                position: 'insideLeft',
+                distance: 13.7,
+                show: false,
+                formatter: '{c}%',
+                rich: {
+                    name: {
+                        textBorderColor: '#fff'
+                    }
+                },
+                textStyle: {
+                    //文字颜色
+                    color: '#000',
+                    //字体风格,'normal','italic','oblique'
+                    fontStyle: 'normal',
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontWeight: 100,
+                    //字体系列
+                    // fontFamily: 'sans-serif',
+                    //字体大小
+                    fontSize: 14
+                }
+            }
+        };
 
         var option = {
             title: {
-                text: '整机部当日各线信息统计',
+                text: config.text,
                 // 标题居中
-                left:'center',
-                textStyle:{
+                left: 'center',
+                textStyle: {
                     //文字颜色
-                    color:'#000',
+                    color: '#000',
                     //字体风格,'normal','italic','oblique'
-                    fontStyle:'normal',
+                    fontStyle: 'normal',
                     //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
-                    fontWeight:'bolder',
+                    fontWeight: 'bolder',
                     //字体系列
-                    fontFamily:'sans-serif',
+                    fontFamily: 'sans-serif',
                     //字体大小
-                    fontSize:17
+                    fontSize: 17
                 }
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                x: 'right',
+                y: '5px',
+                data: config.legend.data
             },
             tooltip: {
                 trigger: 'axis'
@@ -267,13 +313,19 @@ window.yvan = {
                 {
                     type: 'category',
                     show: false,
-                    data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '智能1号线']
-                    // data: myTimeData
+                    // data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '智能1号线']
+                    data: config.xData
                 }
             ],
             yAxis: [
                 {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: {
+                        show: true,
+                        interval: 'auto',
+                        formatter: '{value}%'
+                    },
+                    show: true
                 }
             ],
             grid: {
@@ -285,22 +337,141 @@ window.yvan = {
             },
             series: [
                 {
-                    name: '电视机产量',
+                    name: '计划达成率',
                     type: 'bar',
-                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6],
-                    // data: mData,
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                show: true, //开启显示
-                                position: 'top', //在上方显示
-                                textStyle: { //数值样式
-                                    color: 'gray',
-                                    fontSize: 14
-                                }
-                            }
-                        }
+                    barGap: 0,
+                    label: labelOption,
+                    data: config.planAchin,
+                    type: 'line'
+                },
+                {
+                    name: '工时效率',
+                    type: 'bar',
+                    label: labelOption,
+                    data: config.workEff,
+                    type: 'line'
+                },
+                {
+                    name: '直通率',
+                    type: 'bar',
+                    label: labelOption,
+                    data: config.passRate,
+                    type: 'line'
+                }
+            ]
+        };
+        myCharts.setOption(option);
+        return myCharts;
+    },
+
+    /** @MethodName: getMyCharts
+     * @Description: 车间级柱形图(左)
+     * @Return:
+     * @Author: Yvan
+     * @Date: 2019/8/29/0029  9:49
+     *
+     */
+    getMyChartsR: function (eleId,config) {
+
+        // 渲染活动情况预测
+        var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
+
+        // 标签设置
+        var labelOption = {
+            normal: {
+                rotate: 90,
+                align: 'left',
+                verticalAlign: 'middle',
+                position: 'insideLeft',
+                distance: 17,
+                show: true,
+                // formatter: '{c}%',
+                rich: {
+                    name: {
+                        textBorderColor: '#fff'
                     }
+                },
+                textStyle: {
+                    //文字颜色
+                    color: '#000',
+                    //字体风格,'normal','italic','oblique'
+                    fontStyle: 'normal',
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontWeight: 100,
+                    //字体系列
+                    // fontFamily: 'sans-serif',
+                    //字体大小
+                    fontSize: 14
+                }
+            }
+        };
+
+        var option = {
+            title: {
+                text: config.text,
+                // 标题居中
+                left: 'center',
+                textStyle: {
+                    //文字颜色
+                    color: '#000',
+                    //字体风格,'normal','italic','oblique'
+                    fontStyle: 'normal',
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontWeight: 'bolder',
+                    //字体系列
+                    fontFamily: 'sans-serif',
+                    //字体大小
+                    fontSize: 17
+                }
+            },
+            legend: {
+                x: 'right',
+                y: '5px',
+                data: config.legend.data
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    show: false,
+                    // data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '智能1号线']
+                    data: config.xData
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        show: true,
+                        interval: 'auto',
+                        // formatter: '{value}%'
+                    },
+                    show: true
+                }
+            ],
+            grid: {
+                x: 55,
+                y: 45,
+                x2: 10,
+                y2: 4,
+                borderWidth: 1
+            },
+            series: [
+                {
+                    name: '生产自然台',
+                    type: 'bar',
+                    barGap: 0,
+                    label: labelOption,
+                    data: config.scZiRanTai
+                },
+                {
+                    name: '生产标台数',
+                    type: 'bar',
+                    label: labelOption,
+                    data: config.scBiaoTaiShu
                 }
             ]
         };
