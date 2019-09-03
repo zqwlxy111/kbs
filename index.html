@@ -54,13 +54,13 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!-- 头部 -->
-    <div class="layui-header">
+    <div class="layui-header" style="z-index: 0">
         <div class="layui-logo" ew-event="flexible" style="cursor:pointer;">
 <!--            <img src="/kbs/assets/images/qweqwe.svg"/>-->
             <i class="layui-icon layui-icon-shrink-right"></i>
             <cite>&nbsp;生产可视化系统</cite>
         </div>
-        <ul class="layui-nav layui-layout-left">
+        <!--<ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
             </li>
@@ -96,7 +96,7 @@
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="theme" title="主题"><i class="layui-icon layui-icon-more-vertical"></i></a>
             </li>
-        </ul>
+        </ul>-->
     </div>
 
     <!-- 侧边栏 -->
@@ -114,7 +114,10 @@
                             </dl>-->
                         </dd>
                         <dd>
-                            <a lay-href="page/console/pb-workShop.html">车间级</a>
+                            <a lay-href="page/console/pb-workShop1.html">车间级1</a>
+                        </dd>
+                        <dd>
+                            <a lay-href="page/console/pb-workShop2.html">车间级2</a>
                         </dd>
                         <dd>
                             <a>工厂级</a>
@@ -142,7 +145,7 @@
     </div>
 
     <!-- 主体部分 -->
-    <div class="layui-body" style="height: 100%"></div>
+    <div class="layui-body" style="height: 100%; top: 0"></div>
     <!-- 底部 -->
     <!--<div class="layui-footer">
         copyright © 2019 <a href="http://easyweb.vip" target="_blank">easyweb.vip</a> all rights reserved.

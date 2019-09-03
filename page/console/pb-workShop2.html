@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>EasyWeb后台开发框架</title>
+    <!--    <meta http-equiv="refresh" content="1">-->
+    <!--    iview-css-->
+    <link rel="stylesheet" href="/kbs/assets/libs/iview/iview.css"/>
+
+    <!--    myCss-->
+    <link rel="stylesheet" href="/kbs/assets/css/benjamin.css"/>
+
+    <!--    iview-icon-->
+    <!--    iview用的是ionicons4.0.0.2版本的woff2-->
+    <!--    <link href="https://cdn.bootcss.com/ionicons/4.0.0-2/css/ionicons.css" rel="stylesheet">-->
+    <!--    <link rel="stylesheet" href="/kbs/assets/libs/iview/icon.css"/>-->
+
+    <!--    layui-css-->
+    <!--    <link rel="stylesheet" href="/kbs/assets/libs/layui/css/layui.css"/>-->
+
+    <!--    admin-css-->
+    <!--    <link rel="stylesheet" href="/kbs/assets/module/admin.css?v=312"/>-->
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .ivu-table-small td {
+            height: 26px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+    <template>
+        <div style="background:#eee;padding: 7px">
+            <Row>
+                <i-col span="24">
+                    <Card style="height: 63px">
+                        <div>
+                            <Row>
+                                <i-col span="3" style="line-height: 30px">
+                                    <i-select size="default" v-model="selected" :label-in-value="true"
+                                              @on-change="changge">
+                                        <i-option v-for="line in line " :value="line.code" :label="line.name">
+                                            {{line.name}}
+                                        </i-option>
+                                    </i-select>
+                                </i-col>
+                                <i-col span="18"
+                                       style="text-align: center;color:#000 ;font-size: 27px; line-height: 30px">
+                                    创维自主MES系统 车间看板
+                                </i-col>
+                                <i-col span="3">
+                                    <div id="time" style="line-height: 30px"></div>
+                                </i-col>
+                            </Row>
+                        </div>
+                    </Card>
+                </i-col>
+            </Row>
+
+
+            <Row>
+                <i-col span="12">
+                    <Card style="margin-top:4px; height: 486px">
+                        <Row>
+                            <i-col span="24">
+                                <div style="text-align: center;font-weight: bolder;font-size: 21px">
+                                    <span>整机部当日各线实时产出</span>
+                                </div>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 2px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 4px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 4px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <div id="hdqkyc1" style="width:100%;height: 250px;"></div>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin"
+                                              :style="'width:' + percent + '%'">{{lineName.lineName}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        <span v-show="isShow" style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            生产自然台
+                                        </span>
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.scZiRanTai}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="2">
+                                        <span v-show="isShow" style="font-size: 10px; margin-left: -10px; line-height: 25px;">
+                                            生产标台数
+                                        </span>
+                                    </i-col>
+                                    <i-col span="22">
+                                        <span v-for="lineName in lineByCode" class="libinglin-1"
+                                              :style="'width:' + percent + '%'">{{lineName.scBiaoTaiShu}}</span>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                        </Row>
+                    </Card>
+                </i-col>
+                <i-col span="12">
+                    <Card style="margin-top:4px;margin-left: 4px">
+                        <Row>
+                            <i-col span="24">
+                                <div style="text-align: center;font-weight: bolder;font-size: 21px">
+                                    <span>整机部当日各线信息统计</span>
+                                </div>
+                            </i-col>
+                            <i-col span="24">
+                                <Row>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 4px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 4px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                    <i-col span="8">
+                                        <div class="center-yvan2">
+                                            <div>
+                                                总计划量
+                                            </div>
+                                            <div style="margin: 4px;font-size: 31px">
+                                                1
+                                            </div>
+                                        </div>
+                                    </i-col>
+                                </Row>
+                            </i-col>
+                            <i-col span="24">
+                                <div id="hdqkyc" style="width:100%;height: 327px;"></div>
+                            </i-col>
+                        </Row>
+                    </Card>
+                </i-col>
+                <i-col span="24">
+                    <Card style="margin-top: 4px">
+                        <Row>
+                            <i-col span="24">
+                                <i-Table stripe :columns="columns" :data="dataLine" size="small" border
+                                         height="300"></i-Table>
+                            </i-col>
+                        </Row>
+                    </Card>
+                </i-col>
+            </Row>
+        </div>
+    </template>
+</div>
+
+</body>
+<!-- js部分 -->
+<!--<script type="text/javascript" src="/kbs/assets/libs/layui/layui.js"></script>-->
+<script type="text/javascript" src="/kbs/assets/libs/jquery/jquery.js"></script>
+<script src="/kbs/assets/libs/vue/vue.js"></script>
+<script type="text/javascript" src="/kbs/assets/libs/iview/iview.js"></script>
+<script type="text/javascript" src="/kbs/assets/libs/echarts/echarts.js"></script>
+<script type="text/javascript" src="/kbs/assets/libs/echarts/echartsTheme.js"></script>
+<script type="text/javascript" src="/kbs/assets/js/util.js"></script>
+<script type="text/javascript" src="/kbs/assets/js/tools.js"></script>
+
+<script>
+    window.setInterval("yvan.getDynamicTime()", 1000);//每隔1秒，调用一次getDateDemo()
+</script>
+<script>
+    var qgInter;
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            isShow:false,
+            visible: false,
+            line: '',           // 下拉框的line
+            lineByCode: '',      // 具体某个车间的具体信息
+            selected: '',
+            percent: '',
+            columns: [
+                {
+                    title: '线体',
+                    key: 'lineName',
+                    align: 'center'
+                },
+                {
+                    title: '基本信息',
+                    align: 'center',
+                    children: [
+                        {
+                            title: '线长',
+                            key: 'lineMasterName',
+                            align: 'center'
+                        },
+                        {
+                            title: '人数',
+                            key: 'linePersonNumber',
+                            align: 'center'
+                        },
+                        {
+                            title: '线体状态',
+                            key: 'runStatus',
+                            align: 'center'
+                        },
+                        {
+                            title: '工作时间',
+                            key: 'lineRunDuration',
+                            align: 'center'
+                        }
+                    ]
+                },
+                {
+                    title: '计划信息',
+                    align: 'center',
+                    children: [
+                        {
+                            title: '计划量',
+                            key: 'todayPlanMng',
+                            align: 'center'
+                        },
+                        {
+                            title: '投产量',
+                            key: 'todayTlmng',
+                            align: 'center'
+                        },
+                        {
+                            title: '产出量',
+                            key: 'todayWgmng',
+                            align: 'center'
+                        },
+                        {
+                            title: '计划达成率',
+                            key: 'planAchin',
+                            align: 'center'
+                        },
+                    ]
+                },
+                {
+                    title: '效率信息',
+                    align: 'center',
+                    children: [
+                        {
+                            title: '产出工时',
+                            key: 'todayProductTime',
+                            align: 'center'
+                        },
+                        {
+                            title: '投入工时',
+                            key: 'todayWorkTime',
+                            align: 'center'
+                        },
+                        {
+                            title: '工时效率',
+                            key: 'workEff',
+                            align: 'center'
+                        },
+                    ]
+                },
+                {
+                    title: '质量信息',
+                    align: 'center',
+                    children: [
+                        {
+                            title: '不良数',
+                            key: 'todayYcmng',
+                            align: 'center'
+                        },
+                        {
+                            title: '直通率',
+                            key: 'passRate',
+                            align: 'center'
+                        },
+                    ]
+                }
+            ],
+            dataLine: []
+        },
+        created: function () {
+            // 先检测cookie
+            yvan.passCookie();
+            // 检测浏览器
+            yvan.passChrome();
+
+            // 请求车间信息 -- 用于下拉框的车间选择显示
+            util.requestget('/safe_usercenter/base/getFactorySubDepartmentByFactoryCode?code=1100', function (e) {
+                var line = e.result;
+                vm.line = line;
+                console.log(e);
+            });
+        },
+        methods: {
+            show: function () {
+                this.visible = true;
+            },
+            changge: function (res) {
+                vm.isShow = true;
+                console.log(res);
+                var xData = [];
+                var dataData = {};
+                dataData.planAchin = [];
+                dataData.workEff = [];
+                dataData.passRate = [];
+                dataData.scZiRanTai = [];
+                dataData.scBiaoTaiShu = [];
+                util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=' + res.value, function (e) {
+                    console.log(e);
+                    vm.lineByCode = vm.dataLine = e.result; // 左边图表和下方表格的数据源
+                    vm.percent = (100 / e.result.length);
+                    for (let i = 0; i < e.result.length; i++) {
+                        // 三个率以及表格参数设置
+                        {
+                            var planAchin = e.result[i].todayPlanMng ? yvan.toPercent((e.result[i].todayWgmng / e.result[i].todayPlanMng), 2) : yvan.toPercent(0, 2); // 计划达成率
+                            var workEff = e.result[i].todayWorkTime ? yvan.toPercent(((e.result[i].todayProductTime) / (e.result[i].todayWorkTime)), 2) : yvan.toPercent(0, 2); // 工时效率
+                            var passRate = e.result[i].todayWgmng ? yvan.toPercent((1 - (e.result[i].todayYcmng / e.result[i].todayWgmng)), 2) : yvan.toPercent(0, 2); // 直通率
+                            vm.lineByCode[i].planAchin = planAchin;
+                            vm.lineByCode[i].workEff = workEff;
+                            vm.lineByCode[i].passRate = passRate;
+                            if (e.result[i].lineRunStatus == 0) {
+                                vm.lineByCode[i].runStatus = vm.dataLine[i].runStatus = "停止";
+                            } else {
+                                vm.lineByCode[i].runStatus = vm.dataLine[i].runStatus = "运行";
+                            }
+                        }
+                        // x轴的参数说明
+                        {
+                            xData.push(e.result[i].lineName);
+                        }
+                        // 图表三率的传值
+                        {
+                            dataData.planAchin.push(parseFloat(planAchin));
+                            dataData.workEff.push(parseFloat(workEff));
+                            dataData.passRate.push(parseFloat(passRate));
+                        }
+                        // 生产自然台和生产标台数传值
+                        {
+                            dataData.scZiRanTai.push(e.result[i].todayWgmng);
+                            dataData.scBiaoTaiShu.push(parseInt((e.result[i].todayProductTime / 78.88).toFixed(2)));
+                            vm.lineByCode[i].scZiRanTai = dataData.scZiRanTai[i];
+                            vm.lineByCode[i].scBiaoTaiShu = dataData.scBiaoTaiShu[i];
+                        }
+                    }
+                    console.log(vm.lineByCode);
+                    console.log(xData);
+                    console.log(dataData);
+                    yvan.getMyChartsL('hdqkyc', {
+                        text: '整机部当日各线信息统计',
+                        legend: {
+                            data: ['计划达成率', '工时效率', '直通率']
+                        },
+                        xData: xData,
+                        planAchin: dataData.planAchin,
+                        workEff: dataData.workEff,
+                        passRate: dataData.passRate
+                    });    // 左图
+                    yvan.getMyChartsR('hdqkyc1', {
+                        text: '整机部当日各线实时产出',
+                        legend: {
+                            data: ['生产自然台', '生产标台数']
+                        },
+                        xData: xData,
+                        scZiRanTai: dataData.scZiRanTai,
+                        scBiaoTaiShu: dataData.scBiaoTaiShu
+                    });    // 右图
+                });
+            }
+        }
+    })
+
+
+</script>
+</html>

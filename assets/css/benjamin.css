@@ -6,10 +6,19 @@
     font-weight: bold;
 }
 
+.center-yvan2 {
+    text-align: center;
+    color: rgba(0, 0, 0, .55);
+    font-size: 17px;
+    color: #009688;
+    font-weight: 400;
+    margin-top: 15px;
+}
+
 .libinglin {
     float: left;
     height: 27px;
-    border: 1px solid gray;
+    border: 1px solid #009688;
     text-align: center;
     line-height: 25px;
 }
@@ -18,14 +27,14 @@
     float: left;
     margin-left: -12px;
     height: 27px;
-    border: 1px solid gray;
+    border: 1px solid #009688;
     line-height: 25px;
 }
 
 .libinglin-1 {
     float: left;
     height: 25px;
-    border: 1px solid gray;
+    border: 1px solid #009688;
     text-align: center;
     line-height: 17px;
     line-height: 25px;
@@ -35,7 +44,7 @@
     float: left;
     margin-left: -12px;
     height: 25px;
-    border: 1px solid gray;
+    border: 1px solid #009688;
     text-align: center;
     line-height: 17px;
     line-height: 25px;

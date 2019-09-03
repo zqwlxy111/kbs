@@ -228,13 +228,13 @@ window.yvan = {
 
 
     /** @MethodName: getMyCharts
-     * @Description: 车间级柱形图(左)
+     * @Description: 车间级柱形图(右边)
      * @Return:
      * @Author: Yvan
      * @Date: 2019/8/29/0029  9:49
      *
      */
-    getMyChartsL: function (eleId,config) {
+    getMyChartsR: function (eleId,config) {
 
         // 渲染活动情况预测
         var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
@@ -245,9 +245,9 @@ window.yvan = {
                 rotate: 0,
                 align: 'left',
                 verticalAlign: 'middle',
-                position: 'insideLeft',
+                position: 'top',
                 distance: 13.7,
-                show: false,
+                show: true,
                 formatter: '{c}%',
                 rich: {
                     name: {
@@ -264,16 +264,17 @@ window.yvan = {
                     //字体系列
                     // fontFamily: 'sans-serif',
                     //字体大小
-                    fontSize: 14
+                    fontSize: 12
                 }
             }
         };
 
         var option = {
             title: {
-                text: config.text,
+                subtext: config.text,
+                show:true,
                 // 标题居中
-                left: 'center',
+                left: 'left',
                 textStyle: {
                     //文字颜色
                     color: '#000',
@@ -290,14 +291,14 @@ window.yvan = {
             toolbox: {
                 show: true,
                 orient: 'vertical',
-                left: 'right',
+                right: '-7px',
                 top: 'center',
                 feature: {
-                    mark: {show: true},
-                    dataView: {show: true, readOnly: false},
+                    // mark: {show: true},
+                    // dataView: {show: true, readOnly: false},
                     magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
+                    // restore: {show: true},
+                    // saveAsImage: {show: true}
                 }
             },
             legend: {
@@ -312,7 +313,12 @@ window.yvan = {
             xAxis: [
                 {
                     type: 'category',
-                    show: false,
+                    show: true,
+                    axisLabel: {
+                        show: true,
+                        interval: 'auto',
+                        // formatter: '{value}%'
+                    },
                     // data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '智能1号线']
                     data: config.xData
                 }
@@ -332,7 +338,7 @@ window.yvan = {
                 x: 55,
                 y: 45,
                 x2: 10,
-                y2: 4,
+                y2: 40,
                 borderWidth: 1
             },
             series: [
@@ -342,21 +348,27 @@ window.yvan = {
                     barGap: 0,
                     label: labelOption,
                     data: config.planAchin,
-                    type: 'line'
+                    type: 'line',
+                    smooth: false, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了
+                    symbolSize: 7, // 拐点圆的大小
                 },
                 {
                     name: '工时效率',
                     type: 'bar',
                     label: labelOption,
                     data: config.workEff,
-                    type: 'line'
+                    type: 'line',
+                    smooth: false, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了
+                    symbolSize: 7, // 拐点圆的大小
                 },
                 {
                     name: '直通率',
                     type: 'bar',
                     label: labelOption,
                     data: config.passRate,
-                    type: 'line'
+                    type: 'line',
+                    smooth: false, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了
+                    symbolSize: 7, // 拐点圆的大小
                 }
             ]
         };
@@ -365,13 +377,13 @@ window.yvan = {
     },
 
     /** @MethodName: getMyCharts
-     * @Description: 车间级柱形图(左)
+     * @Description: 车间级柱形图(左边)
      * @Return:
      * @Author: Yvan
      * @Date: 2019/8/29/0029  9:49
      *
      */
-    getMyChartsR: function (eleId,config) {
+    getMyChartsL: function (eleId,config) {
 
         // 渲染活动情况预测
         var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
@@ -379,11 +391,11 @@ window.yvan = {
         // 标签设置
         var labelOption = {
             normal: {
-                rotate: 90,
-                align: 'left',
+                rotate: 0,
+                align: 'center',
                 verticalAlign: 'middle',
-                position: 'insideLeft',
-                distance: 17,
+                position: 'top',
+                distance: 7,
                 show: true,
                 // formatter: '{c}%',
                 rich: {
@@ -396,27 +408,28 @@ window.yvan = {
                     color: '#000',
                     //字体风格,'normal','italic','oblique'
                     fontStyle: 'normal',
-                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 400 | 400...
                     fontWeight: 100,
                     //字体系列
                     // fontFamily: 'sans-serif',
                     //字体大小
-                    fontSize: 14
+                    fontSize: 12
                 }
             }
         };
 
         var option = {
             title: {
-                text: config.text,
+                show:true,
+                subtext: config.text,
                 // 标题居中
-                left: 'center',
+                left: 'left',
                 textStyle: {
                     //文字颜色
                     color: '#000',
                     //字体风格,'normal','italic','oblique'
                     fontStyle: 'normal',
-                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 400 | 400...
                     fontWeight: 'bolder',
                     //字体系列
                     fontFamily: 'sans-serif',
@@ -459,19 +472,36 @@ window.yvan = {
                 y2: 4,
                 borderWidth: 1
             },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                right: '-7px',
+                top: 'center',
+                feature: {
+                    // mark: {show: true},
+                    // dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    // restore: {show: true},
+                    // saveAsImage: {show: true}
+                }
+            },
             series: [
                 {
                     name: '生产自然台',
                     type: 'bar',
                     barGap: 0,
                     label: labelOption,
-                    data: config.scZiRanTai
+                    data: config.scZiRanTai,
+                    smooth: false, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了
+                    symbolSize: 7, // 拐点圆的大小
                 },
                 {
                     name: '生产标台数',
                     type: 'bar',
                     label: labelOption,
-                    data: config.scBiaoTaiShu
+                    data: config.scBiaoTaiShu,
+                    smooth: false, // 当为true时，就是光滑的曲线（默认为true）；当为false，就是折线不是曲线的了
+                    symbolSize: 7, // 拐点圆的大小
                 }
             ]
         };
