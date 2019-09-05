@@ -91,7 +91,7 @@
                                     <div>
                                         总计划量
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalPlan}}
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                     <div>
                                         总投产量
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalTl}}
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                     <div>
                                         总产出量
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalWg}}
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
                                     <div>
                                         总计划达成率
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalPlanAchin}}
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
                                     <div>
                                         总直通率
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalPassRate}}
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                     <div>
                                         总工时效率
                                     </div>
-                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 31px">
+                                    <div style="margin: 4px; margin-bottom: -10px;font-size: 27px">
                                         {{totalLine.totalWorkEff}}
                                     </div>
                                 </div>
@@ -182,17 +182,17 @@
             </Row>
             <Row>
                 <i-col span="24">
-                    <Card style="margin-top: 5px ;">
-                        <i-Table stripe :columns="columns" :data="dataLine" size="small" border height="300"></i-Table>
+                    <Card style="height:357px; margin-top: 5px ;">
+                        <i-Table stripe :columns="columns" :data="dataLine" size="small" border height="324"></i-Table>
                     </Card>
                 </i-col>
             </Row>
             <Row>
                 <i-col span="12" v-show="true">
-                    <Card style="margin-top: 5px;height: 372px">
+                    <Card style="margin-top: 5px;height: 359px">
                         <Row>
                             <i-col span="24">
-                                <div id="hdqkyc1" style="width:100%;height: 257px;"></div>
+                                <div id="hdqkyc1" style="width:100%;height: 255px;"></div>
                             </i-col>
                             <i-col span="24">
                                 <Row>
@@ -242,7 +242,7 @@
                             <Card style="margin-top: 5px ; margin-left: 5px">
                                 <Row>
                                     <i-col span="24">
-                                        <div id="hdqkyc" style="width:100%;height: 337px;"></div>
+                                        <div id="hdqkyc" style="width:100%;height: 325px;"></div>
                                     </i-col>
                                     <!--<i-col span="24">
                                         <Row>
@@ -456,26 +456,55 @@
                 dataData.passRate = [];     // eCharts 直通率
                 dataData.scZiRanTai = [];   // eCharts 生产自然台
                 dataData.scBiaoTaiShu = []; // eCharts 生产标台数
+                // var aa = {lineName:'asdads'};
                 // 开始请求 -- 车间下的所有线体的数据
-                util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=' + res.value, function (e) {
-                    console.log(e);
-                    vm.lineByCode = e.result; // 左边图表和下方表格的数据源
-                    vm.dataLine = e.result;
-                    vm.percent = (100 / e.result.length);
-                    var totalLine = {
-                        totalPlan: 0,
-                        totalTl: 0,
-                        totalWg: 0,
-                        totalPlanAchin: 0,
-                        totalPassRate: 0,
-                        totalWorkEff: 0,
-                        totalYc: 0,
-                        todayProductTime: 0,
-                        todayWorkTime: 0
-                    };
-                    for (let i = 0; i < e.result.length; i++) {
-                        // 三个率以及表格参数设置
+                function qg() {
+                    util.requestget('/mes/kb/getRealProductInfoGroupFactorySubDepartment?code=' + res.value, function (e) {
+                        // 清空数据源
                         {
+                            xData = [];         // eCharts的X轴
+                            dataData = {};      // eCharts的data数据
+                            dataData.planAchin = [];    // eCharts 计划达成率
+                            dataData.workEff = [];      // eCharts 工时效率
+                            dataData.passRate = [];     // eCharts 直通率
+                            dataData.scZiRanTai = [];   // eCharts 生产自然台
+                            dataData.scBiaoTaiShu = []; // eCharts 生产标台数
+                        }
+
+                        var addObj = {};    // 合计新对象
+                        addObj.lineRunDuration = 0;
+                        addObj.linePersonNumber = 0;
+                        console.log(e);
+                        vm.lineByCode = e.result;   // 图表数据源
+                        vm.dataLine = e.result.slice(0);     // 表格数据源  -- 重新拷贝一份数组
+                        vm.percent = (100 / e.result.length);   // 划分表格百分数css
+                        var totalLine = {      // 车间全部线体的总信息
+                            totalPlan: 0,
+                            totalTl: 0,
+                            totalWg: 0,
+                            totalPlanAchin: 0,
+                            totalPassRate: 0,
+                            totalWorkEff: 0,
+                            totalYc: 0,
+                            todayProductTime: 0,
+                            todayWorkTime: 0
+                        };
+                        for (var i = 0; i < e.result.length; i++) {
+
+                            // 各类合计信息统计
+                            addObj.linePersonNumber += parseInt(e.result[i].linePersonNumber);
+                            addObj.lineRunDuration += parseInt(e.result[i].lineRunDuration);
+
+
+                            // totalLine 传值
+                            totalLine.totalPlan += e.result[i].todayPlanMng;        // 总计划
+                            totalLine.totalTl += e.result[i].todayTlmng;            // 总投入
+                            totalLine.totalWg += e.result[i].todayWgmng;            // 总产出
+                            totalLine.totalYc += e.result[i].todayYcmng;            // 总异常
+                            totalLine.todayProductTime += e.result[i].todayProductTime;     // 总产出时间  台数*sap时间
+                            totalLine.todayWorkTime += e.result[i].todayWorkTime;           // 总工作时间
+
+                            // 三个率以及表格参数设置
                             var planAchin = e.result[i].todayPlanMng ? yvan.toPercent((e.result[i].todayWgmng / e.result[i].todayPlanMng), 1) : yvan.toPercent(0, 1); // 计划达成率
                             var workEff = e.result[i].todayWorkTime ? yvan.toPercent(((e.result[i].todayProductTime) / (e.result[i].todayWorkTime)), 1) : yvan.toPercent(0, 1); // 工时效率
                             var passRate = e.result[i].todayWgmng ? yvan.toPercent((1 - (e.result[i].todayYcmng / e.result[i].todayWgmng)), 1) : yvan.toPercent(0, 1); // 直通率
@@ -484,78 +513,89 @@
                             vm.lineByCode[i].passRate = passRate;
                             if (e.result[i].lineRunStatus == 0) {
                                 vm.lineByCode[i].runStatus = "停止";
-                                vm.dataLine[i].runStatus = "停止";
                                 vm.dataLine[i].cellClassName = {
                                     runStatus: 'runStatusFalse'
                                 }
                             } else {
                                 vm.lineByCode[i].runStatus = "运行";
-                                vm.dataLine[i].runStatus = "运行";
                                 vm.dataLine[i].cellClassName = {
                                     runStatus: 'runStatusTrue'
                                 }
                             }
-                        }
-                        // x轴的参数说明
-                        {
+
+                            // x轴的参数说明
                             xData.push(e.result[i].lineName);
-                        }
-                        // 图表三率的传值
-                        {
+
+                            // 图表三率的传值
                             dataData.planAchin.push(parseFloat(planAchin));
                             dataData.workEff.push(parseFloat(workEff));
                             dataData.passRate.push(parseFloat(passRate));
-                        }
-                        // 生产自然台和生产标台数传值
-                        {
+
+                            // 生产自然台和生产标台数传值
                             dataData.scZiRanTai.push(e.result[i].todayWgmng);
                             dataData.scBiaoTaiShu.push(parseInt((e.result[i].todayProductTime / 78.88).toFixed(1)));
                             vm.lineByCode[i].scZiRanTai = dataData.scZiRanTai[i];
                             vm.lineByCode[i].scBiaoTaiShu = dataData.scBiaoTaiShu[i];
                         }
-                        // totalLine 传值
-                        {
-                            totalLine.totalPlan += e.result[i].todayPlanMng;        // 总计划
-                            totalLine.totalTl += e.result[i].todayTlmng;            // 总投入
-                            totalLine.totalWg += e.result[i].todayWgmng;            // 总产出
-                            totalLine.totalYc += e.result[i].todayYcmng;            // 总异常
-                            totalLine.todayProductTime += e.result[i].todayProductTime;     // 总产出时间  台数*sap时间
-                            totalLine.todayWorkTime += e.result[i].todayWorkTime;           // 总工作时间
-                        }
-                    }
-                    // total剩余的三个率
-                    {
+
+                        // total剩余的三个率
                         totalLine.totalPlanAchin = totalLine.totalPlan == 0 ? yvan.toPercent(0, 1) : yvan.toPercent((totalLine.totalWg / totalLine.totalPlan), 1);                 // 总计划达成率
                         totalLine.totalPassRate = totalLine.totalWg == 0 ? yvan.toPercent(0, 1) : yvan.toPercent((1 - (totalLine.totalYc / totalLine.totalWg)), 1);              // 总直通率
                         totalLine.totalWorkEff = totalLine.todayWorkTime == 0 ? yvan.toPercent(0, 1) : yvan.toPercent(((totalLine.todayProductTime) / (totalLine.todayWorkTime)), 1);      // 总工时效率
+
                         // 赋值
                         vm.totalLine = totalLine;
-                    }
-                    // 表格合计
-                    vm.dataLine.push({lineName: 'asd'});
-                    console.log(vm.lineByCode);
-                    console.log(xData);
-                    console.log(dataData);
-                    yvan.getMyChartsL('hdqkyc', {
-                        text: '整机部当日各线信息统计',
-                        legend: {
-                            data: ['计划达成率', '工时效率', '直通率']
-                        },
-                        xData: xData,
-                        planAchin: dataData.planAchin,
-                        workEff: dataData.workEff,
-                        passRate: dataData.passRate
-                    });    // 左图
-                    yvan.getMyChartsR('hdqkyc1', {
-                        text: '整机部当日各线实时产出',
-                        legend: {
-                            data: ['生产自然台', '生产标台数']
-                        },
-                        xData: xData,
-                        scZiRanTai: dataData.scZiRanTai,
-                        scBiaoTaiShu: dataData.scBiaoTaiShu
-                    });    // 右图
-                });
+
+                        // 表格合计
+                        addObj.lineName = '合计';
+                        addObj.lineMasterName = 'N/A';
+                        addObj.runStatus = 'N/A';
+                        addObj.todayPlanMng = totalLine.totalPlan;
+                        addObj.todayTlmng = totalLine.totalTl;
+                        addObj.todayWgmng = totalLine.totalWg;
+                        addObj.planAchin = totalLine.totalPlanAchin;
+                        addObj.todayProductTime = totalLine.todayProductTime.toFixed(1);
+                        addObj.todayWorkTime = totalLine.todayWorkTime;
+                        addObj.workEff = totalLine.totalWorkEff;
+                        addObj.todayYcmng = totalLine.totalYc;
+                        addObj.passRate = totalLine.totalPassRate;
+
+                        vm.dataLine.push(addObj);
+                        console.log(vm.dataLine);
+                        console.log(vm.lineByCode);
+                        console.log(xData);
+                        console.log(dataData);
+
+                        /* 图表渲染 */
+                        yvan.getMyChartsL('hdqkyc1', {
+                            text: '整机部当日各线实时产出',
+                            legend: {
+                                data: ['生产自然台', '生产标台数']
+                            },
+                            xData: xData,
+                            scZiRanTai: dataData.scZiRanTai,
+                            scBiaoTaiShu: dataData.scBiaoTaiShu
+                        });     // 左边的图表
+                        yvan.getMyChartsR('hdqkyc', {
+                            text: '整机部当日各线信息统计',
+                            legend: {
+                                data: ['计划达成率', '工时效率', '直通率']
+                            },
+                            xData: xData,
+                            planAchin: dataData.planAchin,
+                            workEff: dataData.workEff,
+                            passRate: dataData.passRate
+                        });     // 右边的图表
+                    });
+                }
+
+                qg();
+                // 启动定时器
+                clearInterval(qgInter);
+                qgInter = setInterval(function () {
+                    qg();
+                    yvan.passCookie();
+                }, 5000);
             }
         }
     })
