@@ -7,6 +7,19 @@
     <title>登录</title>
     <link rel="stylesheet" href="/kbs/assets/libs/layui/css/layui.css"/>
     <link rel="stylesheet" href="/kbs/assets/css/login.css?v=312">
+    <style>
+        .layui-juzhong {
+            width: 100%;
+            height: 77%;
+            font-size: 30px;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+    </style>
     <script>
         if (window != top) {
             top.location.replace(location.href);
@@ -15,11 +28,11 @@
 </head>
 <body>
 <div class="login-wrapper">
-    <div class="login-header" style="font-weight: 500">
-        <img src="/kbs/assets/images/logo.png"><span style="color:#fff">&nbsp石岩基地平板厂生产实时信息报表登录</span>
+    <div class="login-header">
+        <img src="/kbs/assets/images/logo.png"><span style="color:#fff;font-weight: normal; font-size: 17px">&nbsp石岩基地平板厂生产实时信息报表登录</span>
     </div>
     <div class="login-body">
-        <div class="layui-card" style="margin: 115px; margin-left: 74%">
+        <div class="layui-card">
             <div class="layui-card-header">
                 <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
             </div>
@@ -39,8 +52,8 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <!--                    <a href="javascript:;" class="layui-link">帐号注册</a>-->
-                    <a href="javascript:;" class="layui-link pull-right">忘记密码？</a>
+                    <a href="javascript:;" class="layui-link pull-right"
+                       onclick="alert('请联系智能制造科管理员修改密码！谢谢！')">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
                     <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>登 录</button>
@@ -54,8 +67,33 @@
     </div>
 </div>
 
+<div class="login-wrapper-mobile">
+
+    <!--<div class="layui-container" style="text-indent: 0px; text-align: center; padding:0px; height: 100%">.
+        &lt;!&ndash;            LOGO和文字区域&ndash;&gt;
+        <div class="layui-row" style="text-align: center;height: 100%">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                <div style="border: 1px solid red;width: 40% ;height: 20px; margin: 0 auto"></div>
+            </div>
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                <div style="border: 1px solid red;width: 40% ;height: 20px; margin: 0 auto"></div>
+            </div>
+            &lt;!&ndash;<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12" style="height: 100%">
+                <div class="layui-card" style="height: 100%">
+                    <div class="layui-card-body" style="height: 100%">
+                        <div class="layui-juzhong">欢迎登陆生产可视化系统</div>
+                    </div>
+                </div>
+            </div>&ndash;&gt;
+        </div>
+    </div>-->
+</div>
+
+<!-- js部分 -->
 <script type="text/javascript" src="/kbs/assets/libs/layui/layui.js"></script>
 <script src="/kbs/assets/js/util.js" charset="utf-8"></script>
+<script type="text/javascript" src="/kbs/assets/js/tools.js"></script>
+
 <script>
     layui.use(['layer', 'form'], function () {
         var $ = layui.jquery;
@@ -85,9 +123,14 @@
                             window.m = m;
                             document.cookie = "useridentity=" + JSON.stringify(m) + ";expires=" + exp
                                 .toGMTString();
-                            window.location.href = "/kbs/index.html";
+                            if (yvan.checkBrowser()){
+                                window.location.href = "/kbs/index.html";
+                            }else{
+                                window.location.href = "/kbs/indexMobile.html";
+                            }
                         });
                     } else {
+                        window.location.href = "/kbs/indexMobile.html";
                         layer.msg(m.msg, {time: 1500});
                     }
                 });

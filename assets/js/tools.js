@@ -205,7 +205,7 @@ window.yvan = {
     passCookie: function () {
         if (document.cookie == '') {
             alert("用户已退出！请重新登录！！");
-            window.location.href = '/kbs/login.html';
+            window.location.href = '../../page/console/login.html';
         }
     },
 
@@ -234,7 +234,7 @@ window.yvan = {
      * @Date: 2019/8/29/0029  9:49
      *
      */
-    getMyChartsR: function (eleId,config) {
+    getMyChartsR: function (eleId, config) {
 
         // 渲染活动情况预测
         var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
@@ -272,7 +272,7 @@ window.yvan = {
         var option = {
             title: {
                 subtext: config.text,
-                show:true,
+                show: true,
                 // 标题居中
                 left: 'left',
                 textStyle: {
@@ -383,7 +383,7 @@ window.yvan = {
      * @Date: 2019/8/29/0029  9:49
      *
      */
-    getMyChartsL: function (eleId,config) {
+    getMyChartsL: function (eleId, config) {
 
         // 渲染活动情况预测
         var myCharts = echarts.init(document.getElementById(eleId), myEchartsTheme);
@@ -420,7 +420,7 @@ window.yvan = {
 
         var option = {
             title: {
-                show:true,
+                show: true,
                 subtext: config.text,
                 // 标题居中
                 left: 'left',
@@ -507,5 +507,27 @@ window.yvan = {
         };
         myCharts.setOption(option);
         return myCharts;
+    },
+
+
+    /** @MethodName: checkBrowser
+     * @Description: 判断网页是不是手机浏览器打开
+     * @Return: 返回true表示为pc端打开，返回false表示为手机端打开
+     * @Author: Yvan
+     * @Date: 2019/9/19/0019  11:25
+     *
+     */
+
+    checkBrowser: function () {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 };
