@@ -64,29 +64,58 @@
 
     <div class="login-footer">
         <p style="color:#fff">© 2019 深圳创维-RGB电子有限公司 制造总部 智能设备部 智能制造科 版权所有</p>
-    </div>
+</div>
 </div>
 
 <div class="login-wrapper-mobile">
-
-    <!--<div class="layui-container" style="text-indent: 0px; text-align: center; padding:0px; height: 100%">.
-        &lt;!&ndash;            LOGO和文字区域&ndash;&gt;
-        <div class="layui-row" style="text-align: center;height: 100%">
-            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
-                <div style="border: 1px solid red;width: 40% ;height: 20px; margin: 0 auto"></div>
+<!--    Logo区域-->
+    <div class="layui-row">
+        <div class="layui-col-sm12">
+            <div class="login-logo">
+                <img src="assets/images/wenzi1.png" alt="" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
             </div>
-            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
-                <div style="border: 1px solid red;width: 40% ;height: 20px; margin: 0 auto"></div>
-            </div>
-            &lt;!&ndash;<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12" style="height: 100%">
-                <div class="layui-card" style="height: 100%">
-                    <div class="layui-card-body" style="height: 100%">
-                        <div class="layui-juzhong">欢迎登陆生产可视化系统</div>
-                    </div>
-                </div>
-            </div>&ndash;&gt;
         </div>
-    </div>-->
+    </div>
+<!--    登录账号密码区域-->
+    <div class="layui-row">
+        <div class="layui-col-sm12">
+            <div style="width: 84%; margin: 0 auto">
+                <form class="layui-form" action="" class="login-cont">
+                    <!--<ul>
+                        <li>123</li>
+                        <li>12</li>
+                    </ul>-->
+                    <div class="layui-row">
+                        <div class="layui-col-sm12">
+                            <div style="height: 3rem;border-bottom: 1px solid #ebebeb;padding: 1rem">
+                                <input type="text" id="username-mobile" name="username-mobile" placeholder="请输入您的账号" style="border: none;line-height: 4rem; width: 100%; outline: 0;">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div style="height: 3rem;border-bottom: 1px solid #ebebeb;padding: 1rem">
+                                <input type="password" id="password-mobile" name="password-mobile" placeholder="请输入您的密码" style="border: none;line-height: 4rem; width: 100%; outline: 0;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm12">
+                            <div style="height: 4.4rem;margin-top: 3.7rem">
+                                <button class="layui-btn layui-btn-lg layui-btn-primary layui-btn-radius" lay-submit="" lay-filter="login-mobile" style="width: 100%;height: 94%;color:#ffffff;background-color: #10A78E;font-size: 1.4rem">登&nbsp;&nbsp;&nbsp;录</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--    忘记密码-->
+    <div class="layui-row">
+        <div class="layui-col-sm12">
+            <div style="text-align: center;color: #10a78e;line-height: 4rem;font-size: 0.9rem">
+                <span onclick="alert('请联系智能制造科管理员！谢谢！')">忘记密码？</span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- js部分 -->
@@ -102,6 +131,8 @@
 
         // 监听表单提交
         form.on('submit(login-submit)', function (obj) {
+                                            window.location.href = "/kbs/indexMobile.html";
+
             // console.log(url);
             /*var vv = '/safe_usercenter/safe/user/login?systemId=2&username=' + $(
                 "#username")
@@ -123,14 +154,50 @@
                             window.m = m;
                             document.cookie = "useridentity=" + JSON.stringify(m) + ";expires=" + exp
                                 .toGMTString();
-                            if (yvan.checkBrowser()){
+                            if (yvan.checkBrowser()) {
                                 window.location.href = "/kbs/index.html";
-                            }else{
+                            } else {
                                 window.location.href = "/kbs/indexMobile.html";
                             }
                         });
                     } else {
-                        window.location.href = "/kbs/indexMobile.html";
+                        layer.msg(m.msg, {time: 1500});
+                    }
+                });
+            return false;
+        });
+
+        form.on('submit(login-mobile)', function (obj) {
+                                            // window.location.href = "/kbs/indexMobile.html";
+
+            // console.log(url);
+            /*var vv = '/safe_usercenter/safe/user/login?systemId=2&username=' + $(
+                "#username")
+            .val() + '&password=' + $("#password").val();
+            util.requestget(vv,function () {
+                alert("asdasdas");
+            })*/
+            $.post('http://172.20.212.195:8088/dms/safe_usercenter/safe/user/login?systemId=2&username=' + $(
+                "#username-mobile")
+                .val() + '&password=' + $("#password-mobile").val(),
+                function (m) {
+                    if (m && m.success) {
+                        layer.msg('登录成功', {
+                            time: 550
+                        }, function () {
+                            var exp = new Date();
+                            exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000 * 365);
+                            m.functions = {};
+                            window.m = m;
+                            document.cookie = "useridentity=" + JSON.stringify(m) + ";expires=" + exp
+                                .toGMTString();
+                            if (yvan.checkBrowser()) {
+                                window.location.href = "/kbs/index.html";
+                            } else {
+                                window.location.href = "/kbs/indexMobile.html";
+                            }
+                        });
+                    } else {
                         layer.msg(m.msg, {time: 1500});
                     }
                 });
